@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <main>
+    <div class="container">
+      <div class="server-list">
+        <div class="server-item">
+          <div class="server-icon">
+            <img src="img/server-icon.png" alt="">
+          </div>
+          <div class="server-name">
+              <%= server.adress %>
+          </div>
+          <div class="server-status">
+            <div class="server-players">0/16</div>
+            <div class="server-status-icon"><img src="img/status-on.png" alt=""></div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="actions">
+        <a href="/mods.zip" target="_blank" class="btn">Скачать моды</a>
+        <a href="/map" class="btn">Открыть карту</a>
+        <a class="btn" onclick="infoToggle()">Информация</a>
+      </div>
+      <div id="info" style="display:none;">
+          <p>ForgeOptiFine 1.16.4</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function infoToggle() {
+      var $info = document.getElementById('info')
+      if ($info.style.display !== 'none') {
+        $info.style.display = 'none' 
+      } else {
+        $info.style.display = 'block'
+      }
+    }
+  </script>
+</body>
+</html>
