@@ -1,6 +1,6 @@
-const express = require("express")
-const path = require("path")
-
+const express = require('express')
+const path = require('path')
+const fs = require('fs')
 const status = require('./src/status')
 
 const app = express()
@@ -31,6 +31,12 @@ app.use(express.static(path.join(__dirname, "public")))
 
 app.get("/", (req, res) => {
   res.render('index', page)
+})
+
+app.get("/mods", (req, res) => {
+  console.log(`${new Date().toISOString()}: mods downloaded`)
+  const file = `${__dirname}/files/mods.zip`
+  res.download(file)
 })
 
 function updateStatus() {
