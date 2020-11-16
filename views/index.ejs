@@ -17,11 +17,17 @@
             <img src="img/server-icon.png" alt="">
           </div>
           <div class="server-name">
-              <%= server.adress %>
+              <%= server.address %>
           </div>
           <div class="server-status">
-            <div class="server-players">0/16</div>
-            <div class="server-status-icon"><img src="img/status-on.png" alt=""></div>
+            <div class="server-players"><%= server.players.now %>/<%= server.players.max %></div>
+            <div class="server-status-icon">
+              <% if (server.online) {%>
+                <img src="img/status-on.png" alt="Online">
+              <% } else {%>
+                <img src="img/status-off.png" alt="Offline">
+                <% } %>
+             </div>
           </div>
         </div>
         

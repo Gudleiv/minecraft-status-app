@@ -1,12 +1,25 @@
 const express = require("express")
 const path = require("path")
 
+const status = require('./src/status')
+
 const app = express()
 const port = process.env.PORT || '3000'
 
+const s = {
+  ip: 'mine.servebeer.com',
+  port: 25565
+}
+
 const page = {
   server: {
-    adress: 'mine.servebeer.com'
+    address: s.ip,
+    status: 'error',
+    online: false,
+    players: {
+      max: 16,
+      now: 0
+    }
   }
 }
 
@@ -20,3 +33,14 @@ app.get("/", (req, res) => {
   res.render('index', page)
 })
 
+function updateStatus() {
+  status.get(s.ip, s.port, (data) => {
+    page.server.players.now = data.players.now
+    page.server.players.max = data.players.max
+    page.server.online = data.online
+    console.log(data);
+  })
+}
+
+updateStatus()
+setInterval(updateStatus, 30000)
