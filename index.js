@@ -1,7 +1,7 @@
 const express = require('express')
 const path = require('path')
 const fs = require('fs')
-const status = require('./src/status')
+const status = require('./src/mc-api-status')
 
 const app = express()
 const port = process.env.PORT || '3000'
