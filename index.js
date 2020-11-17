@@ -1,30 +1,26 @@
 const express = require('express')
 const path = require('path')
-const fs = require('fs')
-const status = require('./src/mc-api-status')
+const server = require('./config.json')
+const Query = require('./src/mcquery/app')
 
 const app = express()
 const port = process.env.PORT || '3000'
 
-const s = {
-  ip: 'mine.servebeer.com',
-  port: 25565
-}
-
 const page = {
   server: {
-    address: s.ip,
+    address: server.ip,
     status: 'error',
     online: false,
     players: {
-      max: 16,
-      now: 0
+      max: '~',
+      now: '~'
     }
   }
 }
 
-app.listen(port)
+const q1 = new Query(server.ip, server.port)
 
+app.listen(port)
 app.set('views', path.join(__dirname, 'views'))
 app.set("view engine", "ejs")
 app.use(express.static(path.join(__dirname, "public")))
@@ -39,14 +35,25 @@ app.get("/mods", (req, res) => {
   res.download(file)
 })
 
+updateStatus()
+setInterval(updateStatus, 5000)
+
 function updateStatus() {
-  status.get(s.ip, s.port, (data) => {
-    page.server.players.now = data.players.now
-    page.server.players.max = data.players.max
-    page.server.online = data.online
-    console.log(data);
-  })
+  const data = q1.getStatus()
+  console.log(data);
+  if (!data) {
+    resetStatus()
+    return
+  }
+
+  const {basic, full} = data
+  page.server.online = true
+  page.server.players.now = basic.numplayers
+  page.server.players.max = basic.maxplayers
 }
 
-updateStatus()
-setInterval(updateStatus, 30000)
+function resetStatus() {
+  page.server.online = false
+  page.server.players.now = '~'
+  page.server.players.max = '~'
+}
