@@ -36,11 +36,11 @@ app.get("/mods", (req, res) => {
 })
 
 updateStatus()
-setInterval(updateStatus, 5000)
+setInterval(updateStatus, 10000)
 
 function updateStatus() {
   const data = q1.getStatus()
-  console.log(data);
+  //console.log(data);
   if (!data) {
     resetStatus()
     return
