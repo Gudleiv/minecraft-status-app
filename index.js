@@ -1,24 +1,23 @@
 const express = require('express')
 const path = require('path')
 const server = require('./config.json')
-const Query = require('./src/mcquery/app')
-
+const request = require('request');
 const app = express()
 const port = process.env.PORT || '3000'
 
 const page = {
   server: {
     address: server.ip,
-    status: 'error',
     online: false,
     players: {
       max: '~',
       now: '~'
-    }
+    },
+    mods: []
   }
 }
 
-const q1 = new Query(server.ip, server.port)
+const link = 'https://api.mcsrvstat.us/2/' + server.ip
 
 app.listen(port)
 app.set('views', path.join(__dirname, 'views'))
@@ -39,17 +38,20 @@ updateStatus()
 setInterval(updateStatus, 10000)
 
 function updateStatus() {
-  const data = q1.getStatus()
-  //console.log(data);
-  if (!data) {
-    resetStatus()
-    return
-  }
+  request(link, (err, res, body) => {
+    if (err) console.error(err)
 
-  const {basic, full} = data
-  page.server.online = true
-  page.server.players.now = basic.numplayers
-  page.server.players.max = basic.maxplayers
+    if (res && res.statusCode < 400) {
+      const data = JSON.parse(body)
+      if (data && data.online) {
+        page.server.online = data.online
+        page.server.players.now = data.players.online
+        page.server.players.max = data.players.max
+      }
+    } else {
+      resetStatus()
+    }
+  })
 }
 
 function resetStatus() {
