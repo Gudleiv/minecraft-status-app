@@ -78,6 +78,10 @@ main {
   margin-right: 4px;
 }
 
+.disabled {
+  opacity: 0.6;
+}
+
 .btn {
   margin: 2px;
   font-size: 1rem;
