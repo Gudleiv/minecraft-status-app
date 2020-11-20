@@ -3,7 +3,7 @@ const path = require('path')
 const server = require('./config.json')
 const request = require('request');
 const app = express()
-const port = process.env.PORT || '3000'
+const port = process.env.PORT || 8000
 
 const page = {
   server: {

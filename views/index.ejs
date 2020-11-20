@@ -12,41 +12,43 @@
   <main>
     <div class="container">
       <div class="server-list">
-        <div class="server-item">
-          <div class="server-icon">
-            <img src="img/server-icon.png" alt="">
+          <div class="server-item">
+            <div class="server-header">
+              <div class="server-icon">
+                <img src="img/server-icon.png" alt="">
+              </div>
+              <div class="server-name">
+                  <%= server.address %>
+              </div>
+              <div class="server-status">
+                <div class="server-players"><%= server.players.now %>/<%= server.players.max %></div>
+                <div class="server-status-icon">
+                  <% if (server.online) {%>
+                    <img src="img/status-on.png" alt="Online">
+                  <% } else {%>
+                    <img src="img/status-off.png" alt="Offline">
+                    <% } %>
+                 </div>
+              </div>
           </div>
-          <div class="server-name">
-              <%= server.address %>
+          <div class="server-actions">
+            <a href="/mods" class="btn btn-mc">Скачать моды</a>
+            <a href="#" class="btn btn-mc disabled">Открыть карту</a>
+            <a class="btn btn-mc" onclick="infoToggle()">Информация</a>
           </div>
-          <div class="server-status">
-            <div class="server-players"><%= server.players.now %>/<%= server.players.max %></div>
-            <div class="server-status-icon">
-              <% if (server.online) {%>
-                <img src="img/status-on.png" alt="Online">
-              <% } else {%>
-                <img src="img/status-off.png" alt="Offline">
-                <% } %>
-             </div>
+          <div id="info" class="server-info" style="display:block">
+              <a href="#" class="btn btn-mc">Привет</a>
+              <h3>ForgeOptiFine 1.16.4</h3>
+              <p>Forge 35.0.18</p>
+              <br>
+              <h3>Обновление 19.11.20</h3>
+              <li>Forge обновлен до последней версии</li>
+              <li>Удалены моды BetterWeather, GoblinTraders, DoubleSlabs</li>
+              <br>
+              <h3>Обновление 15.11.20</h3>
+              <li>Добавлено 38 модификаций</li>
           </div>
         </div>
-        
-      </div>
-      <div class="actions">
-        <a href="/mods" class="btn">Скачать моды</a>
-        <a href="#" class="btn disabled">Открыть карту</a>
-        <a class="btn" onclick="infoToggle()">Информация</a>
-      </div>
-      <div id="info" style="display:none;">
-          <h3>ForgeOptiFine 1.16.4</h3>
-          <p>Forge 35.0.18</p>
-          <br>
-          <h3>Обновление 19.11.20</h3>
-          <li>Forge обновлен до последней версии</li>
-          <li>Удалены моды BetterWeather, GoblinTraders, DoubleSlabs</li>
-          <br>
-          <h3>Обновление 15.11.20</h3>
-          <li>Добавлено 38 модификаций</li>
       </div>
     </div>
   </main>
